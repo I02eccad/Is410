@@ -28,8 +28,12 @@ class SistemaDeGestionDeCursos {
 
 public:
 	SistemaDeGestionDeCursos();
+	virtual ~SistemaDeGestionDeCursos();
 	void verLosCursos();
 	void acceder();
+	void menuPrincipal();
+	void darDeAltaCurso();
+	void darDeBajaCurso();
 };
 
 #endif /* SISTEMADEGESTIONDECURSOS_H_ */
