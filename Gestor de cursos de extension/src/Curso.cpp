@@ -7,14 +7,12 @@
 
 #include "Curso.h"
 
-Curso::Curso(int id, const char *contrasena, const char *nombre, const char *apellidos, const char *dni, const char *email)
+Curso::Curso()
 {
-	Curso::id = id;
-	Curso::contrasena = contrasena;
-	Curso::nombre = nombre;
-	Curso::apellidos = apellidos;
-	Curso::dni = dni;
-	Curso::email = email;
 
 }
 
+void Curso::imprimirCursoFormateado()
+{
+	// Imprimir datos del curso en una forma como linea de base de datos
+}

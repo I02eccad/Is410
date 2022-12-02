@@ -10,14 +10,12 @@
 
 class Curso {
 public:
-	Curso(int id, const char *contrasena, const char *nombre, const char *apellidos, const char *dni, const char *email);
+	Curso();
 
-	int id;
-	char *contrasena;
-	char *nombre;
-	char *apellidos;
-	char *dni;
-	char *email;
+	bool isVisible;
+
+	void imprimirCursoFormateado();
+
 };
 
 #endif /* CURSO_H_ */
