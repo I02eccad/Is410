@@ -10,9 +10,13 @@
 
 #include <vector>
 #include <string>
+#include <ctime>
+#include <iomanip>
 #include "../lib/tinyxml2.h"
 #include "Curso.h"
 #include "Usuario.h"
+
+
 
 class SistemaDeGestionDeCursos {
 	std::vector<Curso> listaDeCursos;
@@ -23,8 +27,15 @@ class SistemaDeGestionDeCursos {
 
 	void cargarCursos();
 	void cargarUsuarios();
+	vector<char*> cargarListaDeString(tinyxml2::XMLElement *root);
+	vector<int> cargarListaDeInt(tinyxml2::XMLElement *root);
+	time_t SistemaDeGestionDeCursos::convertirStringDatetime(const char *datetime_str);
 	int  guardarCursos();
-	void guardarUsuarios();
+	// Solo funciona con tipos atómicos como string y int
+	template <typename T>
+	int guardarListaDeElem(tinyxml2::XMLDocument doc, tinyxml2::XMLElement *recursosAV, vector<T> listaDeRecursosAV);
+	int guardarUsuarios();
+
 
 public:
 	SistemaDeGestionDeCursos();
@@ -32,8 +43,8 @@ public:
 	void verLosCursos();
 	void acceder();
 	void menuPrincipal();
-	void darDeAltaCurso();
-	void darDeBajaCurso();
+	void darDeAltaCurso(Curso curso);
+	void darDeBajaCurso(Curso curso);
 };
 
 #endif /* SISTEMADEGESTIONDECURSOS_H_ */
