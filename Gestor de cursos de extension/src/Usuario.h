@@ -8,6 +8,13 @@
 #ifndef USUARIO_H_
 #define USUARIO_H_
 
+enum Rol {
+	Estudiante,
+	CoordinadorDeRecursos,
+	CoordinadorDeCursos,
+	Administrador;
+}
+
 class Usuario {
 public:
 	Usuario(int id, const char *contrasena, const char *nombre, const char *apellidos, const char *dni, const char *email);
@@ -17,7 +24,8 @@ public:
 	char *nombre;
 	char *apellidos;
 	char *dni;
-	char *email;w
+	char *email;
+	Rol rol;
 };
 
 #endif /* USUARIO_H_ */
