@@ -6,29 +6,26 @@
  */
 
 #include "SistemaDeGestionDeCursos.h"
+#include <iostream>
 
 SistemaDeGestionDeCursos::SistemaDeGestionDeCursos()
 {
 	// Cargar los datos de los XML ficheros a los vectores de datos dentro la clase
 	this->cargarCursos();
 	this->cargarUsuarios();
+
 }
 
-SistemaDeGestionDeCursos::~SistemaDeGestionDeCursos()
+void SistemaDeGestionDeCursos::guardarDatos()
 {
 	// Guardar los datos de los vectores de datos dentro la clase a los XML ficheros
 	this->guardarCursos();
 	this->guardarUsuarios();
 }
 
-void SistemaDeGestionDeCursos::menuPrincipal()
-{
-
-}
-
 void SistemaDeGestionDeCursos::verLosCursos()
 {
-	for (Curso curso : listaDeCursos)
+	for (Curso curso : this->listaDeCursos)
 	{
 		if (curso.isVisible){
 			curso.imprimirCursoFormateado();
@@ -38,17 +35,29 @@ void SistemaDeGestionDeCursos::verLosCursos()
 
 void SistemaDeGestionDeCursos::darDeAltaCurso(Curso curso)
 {
-	// Crear curso con el constructor
-	// Anadir a la lista de cursos
+	if (this->authorizacion == Administrador || this->authorizacion == CoordinadorDeCursos){
+		this->listaDeCursos.push_back(curso);
+	} else {
+		throw NoAuthorizado();
+	}
 }
 void SistemaDeGestionDeCursos::darDeBajaCurso(Curso curso)
 {
-	curso.isVisible = false;
+	if (this->authorizacion == Administrador || this->authorizacion == CoordinadorDeCursos){
+		curso.isVisible = false;
+	} else {
+		throw NoAuthorizado();
+	}
 }
 
-void SistemaDeGestionDeCursos::acceder()
+void SistemaDeGestionDeCursos::acceder(string email, string contrasena)
 {
-
+	for (Usuario usuario : listaDeUsuarios)
+	{
+		if (usuario.email == email && usuario.contrasena == contrasena){
+			this->authorizacion = usuario.rol;
+		}
+	}
 }
 
 void SistemaDeGestionDeCursos::cargarCursos()
@@ -58,19 +67,54 @@ void SistemaDeGestionDeCursos::cargarCursos()
 
 	tinyxml2::XMLElement *root = doc.FirstChildElement();
 
-	for (tinyxml2::XMLElement* curso = root->FirstChildElement(); curso != NULL; curso = curso->NextSiblingElement())
+	for (tinyxml2::XMLElement *curso = root->FirstChildElement(); curso != NULL; curso = curso->NextSiblingElement())
 	{
-		Curso curso_nuevo(curso->FirstChildElement()->GetText(),
-				          curso->NextSiblingElement()->GetText(),
-						  curso->NextSiblingElement()->GetText(),
-						  convertirStringDatetime(curso->NextSiblingElement()->GetText()),
-						  cargarListaDeString(curso->NextSiblingElement()),
-						  curso->NextSiblingElement()->IntText(),
-						  curso->NextSiblingElement()->IntText(),
-						  cargarListaDeInt(curso->NextSiblingElement()),
-						  cargarListaDeInt(curso->NextSiblingElement()),
-						  curso->NextSiblingElement()->IntText(),
-						  cargarListaDeInt(curso->NextSiblingElement()))
+		tinyxml2::XMLElement *curr_child = curso->FirstChildElement();
+		const char *id = curr_child->GetText();
+
+		curr_child = curr_child->NextSiblingElement();
+		const char *nombre = curr_child->GetText();
+
+		curr_child = curr_child->NextSiblingElement();
+		const char *desc   = curr_child->GetText();
+
+		curr_child = curr_child->NextSiblingElement();
+		time_t fechaFinal = convertirStringDatetime(curr_child->GetText());
+
+		curr_child = curr_child->NextSiblingElement();
+		vector<const char*> listaDeRecursosAV = cargarListaDeString(curr_child);
+
+		curr_child = curr_child->NextSiblingElement();
+		int aforo = curr_child->IntText();
+
+		curr_child = curr_child->NextSiblingElement();
+		int precio = curr_child->IntText();
+
+		curr_child = curr_child->NextSiblingElement();
+		vector<int> listaDeEsperaDeEstud = cargarListaDeInt(curr_child);
+
+		curr_child = curr_child->NextSiblingElement();
+		vector<int> listaDeAsistentes = cargarListaDeInt(curr_child);
+
+		curr_child = curr_child->NextSiblingElement();
+		int ponentePrincipal = curr_child->IntText();
+
+		curr_child = curr_child->NextSiblingElement();
+		vector<int> listaDePonentes = cargarListaDeInt(curr_child);
+
+		Curso curso_nuevo(id,
+				          nombre,
+						  desc,
+						  fechaFinal,
+						  listaDeRecursosAV,
+						  aforo,
+						  precio,
+						  listaDeEsperaDeEstud,
+						  listaDeAsistentes,
+						  ponentePrincipal,
+						  listaDePonentes);
+
+		this->listaDeCursos.push_back(curso_nuevo);
 	}
 }
 
@@ -83,9 +127,10 @@ time_t SistemaDeGestionDeCursos::convertirStringDatetime(const char *datetime_st
 	 return time;
 }
 
-vector<char*> SistemaDeGestionDeCursos::cargarListaDeString(tinyxml2::XMLElement *root)
+vector<const char*> SistemaDeGestionDeCursos::cargarListaDeString(tinyxml2::XMLElement *root)
 {
-	vector<char*> listaFinal = vector<char*>();
+	vector<const char*> listaFinal = vector<const char*>();
+
 	for (tinyxml2::XMLElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement())
 	{
 		listaFinal.push_back((char * const) elem->GetText());
@@ -97,6 +142,7 @@ vector<char*> SistemaDeGestionDeCursos::cargarListaDeString(tinyxml2::XMLElement
 vector<int> SistemaDeGestionDeCursos::cargarListaDeInt(tinyxml2::XMLElement *root)
 {
 	vector<int> listaFinal = vector<int>();
+
 	for (tinyxml2::XMLElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement())
 	{
 		listaFinal.push_back(elem->IntText());
@@ -107,16 +153,18 @@ vector<int> SistemaDeGestionDeCursos::cargarListaDeInt(tinyxml2::XMLElement *roo
 void SistemaDeGestionDeCursos::cargarUsuarios()
 {
 	tinyxml2::XMLDocument doc;
-	doc.LoadFile(fichero_usuarios);
+	doc.LoadFile(this->fichero_usuarios);
 
 	tinyxml2::XMLElement *root = doc.FirstChildElement();
 
 	for (tinyxml2::XMLElement* usuario = root->FirstChildElement(); usuario != NULL; usuario = usuario->NextSiblingElement())
 	{
+
 		Usuario usuario_nuevo(usuario->FirstChildElement()->IntText(-1), usuario->NextSiblingElement()->GetText(),
 				    usuario->NextSiblingElement()->GetText(), usuario->NextSiblingElement()->GetText(),
-					usuario->NextSiblingElement()->GetText(), usuario->NextSiblingElement()->GetText());
-		listaDeUsuarios.push_back(usuario_nuevo)
+					usuario->NextSiblingElement()->GetText(), usuario->NextSiblingElement()->GetText(),
+					(Rol) usuario->NextSiblingElement()->IntText(-1));
+		this->listaDeUsuarios.push_back(usuario_nuevo);
 	}
 }
 
@@ -126,7 +174,7 @@ int SistemaDeGestionDeCursos::guardarCursos()
 	tinyxml2::XMLElement* root = doc.NewElement("cursos");
 	doc.InsertFirstChild(root);
 
-	for (Curso curso : listaDeCursos)
+	for (Curso curso : this->listaDeCursos)
 	{
 		tinyxml2::XMLElement* curso_nuevo = doc.NewElement("curso");
 
@@ -147,7 +195,7 @@ int SistemaDeGestionDeCursos::guardarCursos()
 		curso_nuevo->InsertEndChild(fechaFinal);
 
 		tinyxml2::XMLElement* recursosAV = doc.NewElement("recursosAudiovisuales");
-		guardarListaDeElem<char*>(doc, recursosAV, curso.recursosAudiovisuales);
+		SistemaDeGestionDeCursos::guardarListaDeElem<const char*>(&doc, recursosAV, curso.recursosAudiovisuales);
 		curso_nuevo->InsertEndChild(recursosAV);
 
 		tinyxml2::XMLElement* aforo = doc.NewElement("aforo");
@@ -159,11 +207,11 @@ int SistemaDeGestionDeCursos::guardarCursos()
 		curso_nuevo->InsertEndChild(precio);
 
 		tinyxml2::XMLElement* listaDeEsperaDeEstud = doc.NewElement("listaDeEsperaDeEstud");
-		guardarListaDeElem<int>(doc, listaDeEsperaDeEstud, curso.listaDeEsperaDeEstud);
-		curso_nuevo->InsertEndChild(recursosAV);
+		guardarListaDeElem<int>(&doc, listaDeEsperaDeEstud, curso.listaDeEsperaDeEstud);
+		curso_nuevo->InsertEndChild(listaDeEsperaDeEstud);
 
 		tinyxml2::XMLElement* listaDeAsistentes = doc.NewElement("listaDeAsistentes");
-		guardarListaDeElem<int>(doc, listaDeAsistentes, curso.listaDeAsistentes);
+		guardarListaDeElem<int>(&doc, listaDeAsistentes, curso.listaDeAsistentes);
 		curso_nuevo->InsertEndChild(listaDeAsistentes);
 
 		tinyxml2::XMLElement* ponentePrincipal = doc.NewElement("ponentePrincipal");
@@ -171,24 +219,29 @@ int SistemaDeGestionDeCursos::guardarCursos()
 		curso_nuevo->InsertEndChild(ponentePrincipal);
 
 		tinyxml2::XMLElement* listaDePonentes = doc.NewElement("listaDePonentes");
-		guardarListaDeElem<int>(doc, listaDePonentes, curso.listaDePonentes);
+		guardarListaDeElem<int>(&doc, listaDePonentes, curso.listaDePonentes);
 		curso_nuevo->InsertEndChild(listaDePonentes);
+
+		root->InsertEndChild(curso_nuevo);
 
 	}
 
+	doc.SaveFile(fichero_cursos, false);
+
+	return doc.ErrorID();
 }
 
 template <typename T>
-int SistemaDeGestionDeCursos::guardarListaDeElem(tinyxml2::XMLDocument doc, tinyxml2::XMLElement *padre, vector<T> lista)
+int SistemaDeGestionDeCursos::guardarListaDeElem(tinyxml2::XMLDocument *doc, tinyxml2::XMLElement *padre, vector<T> lista)
 {
 	for (T elem : lista)
 	{
-		tinyxml2::XMLElement* xmlElem = doc.NewElement("recursoAV");
+		tinyxml2::XMLElement* xmlElem = (*doc).NewElement("elem");
 		xmlElem->SetText(elem);
-		lista->InsertEndChild(xmlElem);
+		padre->InsertEndChild(xmlElem);
 	}
 
-	return doc.ErrorID();
+	return (*doc).ErrorID();
 }
 
 int SistemaDeGestionDeCursos::guardarUsuarios()
@@ -197,7 +250,7 @@ int SistemaDeGestionDeCursos::guardarUsuarios()
 	tinyxml2::XMLElement* root = doc.NewElement("usuarios");
 	doc.InsertFirstChild(root);
 
-	for (Usuario usuario : listaDeUsuarios)
+	for (Usuario usuario : this->listaDeUsuarios)
 	{
 		tinyxml2::XMLElement* usuario_nuevo = doc.NewElement("usuario");
 
@@ -224,6 +277,10 @@ int SistemaDeGestionDeCursos::guardarUsuarios()
 		tinyxml2::XMLElement* email = doc.NewElement("email");
 		email->SetText(usuario.email);
 		usuario_nuevo->InsertEndChild(email);
+
+		tinyxml2::XMLElement* rol = doc.NewElement("rol");
+		rol->SetText(usuario.rol);
+		usuario_nuevo->InsertEndChild(rol);
 
 		root->InsertEndChild(usuario_nuevo);
 	}
