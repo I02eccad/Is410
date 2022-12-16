@@ -3,4 +3,4 @@ PROJECT(Gestor_de_cursos_de_extension)
 
 file(GLOB SOURCES "src/*" "lib/*")
 
-add_executable(iniciar_gui ${SOURCES})
+add_executable(iniciar_sistema ${SOURCES})
