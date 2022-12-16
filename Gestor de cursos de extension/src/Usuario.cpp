@@ -7,7 +7,7 @@
 
 #include "Usuario.h"
 
-Usuario::Usuario(int id, const char *contrasena, const char *nombre, const charÂ *apellidos, const char *dni, const char *email)
+Usuario::Usuario(int id, const char *contrasena, const char *nombre, const char *apellidos, const char *dni, const char *email, Rol rol)
 {
 	Usuario::id = id;
 	Usuario::contrasena = contrasena;
@@ -15,5 +15,6 @@ Usuario::Usuario(int id, const char *contrasena, const char *nombre, const charÂ
 	Usuario::apellidos = apellidos;
 	Usuario::dni = dni;
 	Usuario::email = email;
+	Usuario::rol = rol;
 
 }

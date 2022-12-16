@@ -21,7 +21,7 @@ public:
 		  const char *nombre,
 		  const char *descripcion,
 		  time_t fechaFinal,
-		  vector<char*> recursosAudiovisuales,
+		  vector<const char*> recursosAudiovisuales,
 		  int aforo,
 	      int precio,
 		  vector<int> listaDeEsperaDeEstud,
@@ -29,11 +29,11 @@ public:
 	      int ponentePrincipal,
 	      vector<int> listaDePonentes);
 
-	char *id;
-	char *nombre;
-	char *descripcion;
+	const char *id;
+	const char *nombre;
+	const char *descripcion;
 	time_t fechaFinal;
-	vector<char*> recursosAudiovisuales;
+	vector<const char*> recursosAudiovisuales;
 	int aforo;
 	int precio;
 	// Listas de IDs de Usuarios

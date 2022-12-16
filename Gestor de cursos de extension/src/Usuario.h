@@ -9,22 +9,23 @@
 #define USUARIO_H_
 
 enum Rol {
+	Visitante,
 	Estudiante,
 	CoordinadorDeRecursos,
 	CoordinadorDeCursos,
-	Administrador;
-}
+	Administrador
+};
 
 class Usuario {
 public:
-	Usuario(int id, const char *contrasena, const char *nombre, const char *apellidos, const char *dni, const char *email);
+	Usuario(int id, const char *contrasena, const char *nombre, const char *apellidos, const char *dni, const char *email, Rol rol);
 
 	int id;
-	char *contrasena;
-	char *nombre;
-	char *apellidos;
-	char *dni;
-	char *email;
+	const char *contrasena;
+	const char *nombre;
+	const char *apellidos;
+	const char *dni;
+	const char *email;
 	Rol rol;
 };
 
