@@ -23,8 +23,27 @@ struct NoAuthorizado : public exception {
    }
 };
 
+struct CredencialesIncorrectas : public exception {
+   const char * what () const throw () {
+      return "Nombre o contraseña son incorrectas!";
+   }
+};
+
+struct CursoNoEncontrado : public exception {
+   const char * what () const throw () {
+      return "Curso dado no existe!";
+   }
+};
+
+struct SuperadoIntentos : public exception {
+   const char * what () const throw () {
+      return "Ha superado el número de intentos, póngase en contacto con el administrador!";
+   }
+};
+
 class SistemaDeGestionDeCursos {
-	Rol authorizacion = Administrador; // !!! solo por probar
+	Rol authorizacion = Visitante;
+	int contadorDeAccesosFallidos = 0;
 
 	std::vector<Curso> listaDeCursos;
 	std::vector<Usuario> listaDeUsuarios;
@@ -49,8 +68,10 @@ public:
 	void guardarDatos();
 	void verLosCursos();
 	void acceder(string email, string contrasena);
+	void registrar(Usuario usuario);
 	void darDeAltaCurso(Curso curso);
 	void darDeBajaCurso(Curso curso);
+	void modificarCurso(string cursoId, Curso curso_modificado);
 };
 
 #endif /* SISTEMADEGESTIONDECURSOS_H_ */

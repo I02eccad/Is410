@@ -35,19 +35,21 @@ void SistemaDeGestionDeCursos::verLosCursos()
 
 void SistemaDeGestionDeCursos::darDeAltaCurso(Curso curso)
 {
-	if (this->authorizacion == Administrador || this->authorizacion == CoordinadorDeCursos){
-		this->listaDeCursos.push_back(curso);
-	} else {
+	if (!(this->authorizacion == Administrador || this->authorizacion == CoordinadorDeCursos)){
 		throw NoAuthorizado();
 	}
+
+	this->listaDeCursos.push_back(curso);
+
 }
 void SistemaDeGestionDeCursos::darDeBajaCurso(Curso curso)
 {
-	if (this->authorizacion == Administrador || this->authorizacion == CoordinadorDeCursos){
-		curso.isVisible = false;
-	} else {
+	if (!(this->authorizacion == Administrador || this->authorizacion == CoordinadorDeCursos)){
 		throw NoAuthorizado();
 	}
+
+	curso.isVisible = false;
+
 }
 
 void SistemaDeGestionDeCursos::acceder(string email, string contrasena)
@@ -56,8 +58,10 @@ void SistemaDeGestionDeCursos::acceder(string email, string contrasena)
 	{
 		if (usuario.email == email && usuario.contrasena == contrasena){
 			this->authorizacion = usuario.rol;
+			return;
 		}
 	}
+	throw CredencialesIncorrectas();
 }
 
 void SistemaDeGestionDeCursos::cargarCursos()
