@@ -9,6 +9,9 @@
 
 #include "Curso.h"
 #include <iostream>
+#include <algorithm>
+#include "Estadistica.h"
+
 
 Curso::Curso(const char *id,
 		  const char *nombre,
@@ -33,12 +36,45 @@ Curso::Curso(const char *id,
 	Curso::listaDeAsistentes = listaDeAsistentes;
 	Curso::ponentePrincipal = ponentePrincipal;
 	Curso::listaDePonentes = listaDePonentes;
+
+	Curso::listaDeEstudiantes = vector<int>();
+	Curso::estadistica = Estadistica(id, aforo);
+}
+
+Curso::Curso(const char *id,
+		  const char *nombre,
+		  const char *descripcion,
+		  time_t fechaFinal,
+		  vector<const char*> recursosAudiovisuales,
+		  int aforo,
+	      int precio,
+		  vector<int> listaDeEsperaDeEstud,
+	      vector<int> listaDeAsistentes,
+	      int ponentePrincipal,
+	      vector<int> listaDePonentes,
+		  vector<int> listaDeEstudiantes,
+		  Estadistica estadistica)
+{
+	Curso::id = id;
+	Curso::nombre = nombre;
+	Curso::descripcion = descripcion;
+	Curso::fechaFinal = fechaFinal;
+	Curso::recursosAudiovisuales = recursosAudiovisuales;
+	Curso::aforo = aforo;
+	Curso::precio = precio;
+	Curso::listaDeEsperaDeEstud = listaDeEsperaDeEstud;
+	Curso::listaDeAsistentes = listaDeAsistentes;
+	Curso::ponentePrincipal = ponentePrincipal;
+	Curso::listaDePonentes = listaDePonentes;
+
+	Curso::listaDeEstudiantes = listaDeEstudiantes;
+	Curso::estadistica = estadistica;
 }
 
 void Curso::imprimirCursoFormateado()
 {
 	cout << "------------------------------------------" << endl;
-	// Imprimir datos del curso en una forma como linea de base de datos
+
 	cout << "ID: " << this->id << endl;
 	cout << "Nombre: " << this->nombre << endl;
 	cout << "Descripción: " << this->descripcion << endl;
@@ -77,3 +113,43 @@ void Curso::imprimirCursoFormateado()
 
 	cout << "--------------------------------------------" << endl;
 }
+
+void Curso::subscribir(int estudianteId)
+{
+	if (std::find(this->listaDeEstudiantes.begin(), this->listaDeEstudiantes.end(), estudianteId) != this->listaDeEstudiantes.end())
+	{
+		throw YaSuscrito();
+	}
+
+	this->listaDeEstudiantes.push_back(estudianteId);
+	this->estadistica.numeroDeParticipantes++;
+}
+
+void Curso::darseDeBaja(int estudianteId)
+{
+	auto position = std::find(this->listaDeEstudiantes.begin(), this->listaDeEstudiantes.end(), estudianteId);
+	if (position != this->listaDeEstudiantes.end())
+	{
+		this->listaDeEstudiantes.erase(position);
+		this->estadistica.numeroDeParticipantes--;
+	}
+
+	throw NoSuscrito();
+}
+
+void Curso::asignarRecurso(char *recurso)
+{
+	this->recursosAudiovisuales.push_back(recurso);
+}
+void Curso::retirarRecurso(char *recurso)
+{
+	auto position = std::find(this->recursosAudiovisuales.begin(), this->recursosAudiovisuales.end(), recurso);
+	if (position != this->recursosAudiovisuales.end())
+	{
+		this->recursosAudiovisuales.erase(position);
+	}
+
+	throw RecursoNoExiste();
+}
+
+

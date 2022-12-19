@@ -35,7 +35,7 @@ void SistemaDeGestionDeCursos::verLosCursos()
 
 void SistemaDeGestionDeCursos::darDeAltaCurso(Curso curso)
 {
-	if (!(this->authorizacion == Administrador || this->authorizacion == CoordinadorDeCursos)){
+	if (!(this->autorizacion == Administrador || this->autorizacion == CoordinadorDeCursos)){
 		throw NoAuthorizado();
 	}
 
@@ -44,7 +44,7 @@ void SistemaDeGestionDeCursos::darDeAltaCurso(Curso curso)
 }
 void SistemaDeGestionDeCursos::darDeBajaCurso(Curso curso)
 {
-	if (!(this->authorizacion == Administrador || this->authorizacion == CoordinadorDeCursos)){
+	if (!(this->autorizacion == Administrador || this->autorizacion == CoordinadorDeCursos)){
 		throw NoAuthorizado();
 	}
 
@@ -52,17 +52,138 @@ void SistemaDeGestionDeCursos::darDeBajaCurso(Curso curso)
 
 }
 
+void SistemaDeGestionDeCursos::modificarCurso(string cursoId, Curso curso_modificado)
+{
+	if (!(this->autorizacion == Administrador || this->autorizacion == CoordinadorDeCursos)){
+		throw NoAuthorizado();
+	}
+
+	for (int i=0; i<this->listaDeCursos.size(); i++)
+	{
+		if (cursoId.compare(this->listaDeCursos[i].id) == 0)
+		{
+			this->listaDeCursos.erase(next(this->listaDeCursos.begin(), i));
+			darDeAltaCurso(curso_modificado);
+			return;
+		}
+	}
+
+	throw CursoNoEncontrado();
+}
+
+void SistemaDeGestionDeCursos::asignarRecursoACurso(string cursoId, char *recurso)
+{
+	if (this->autorizacion != CoordinadorDeRecursos){
+			throw NoAuthorizado();
+	}
+
+	for (Curso curso : this->listaDeCursos)
+	{
+		if (cursoId.compare(curso.id) == 0){
+			curso.asignarRecurso(recurso);
+			return;
+		}
+	}
+
+	throw NoExiste();
+
+}
+void SistemaDeGestionDeCursos::retirarRecursoDeCurso(string cursoId, char *recurso)
+{
+	if (this->autorizacion != CoordinadorDeRecursos){
+			throw NoAuthorizado();
+	}
+
+	for (Curso curso : this->listaDeCursos)
+	{
+		if (cursoId.compare(curso.id) == 0){
+			curso.retirarRecurso(recurso);
+			return;
+		}
+	}
+
+	throw NoExiste();
+}
+
+void SistemaDeGestionDeCursos::subscribirse(string cursoId)
+{
+	if (this->autorizacion != Estudiante){
+			throw NoAuthorizado();
+	}
+
+	for (Curso curso : this->listaDeCursos)
+	{
+		if (cursoId.compare(curso.id) == 0){
+			curso.subscribir(this->usuarioConectado.id);
+			return;
+		}
+	}
+
+	throw NoExiste();
+
+}
+void SistemaDeGestionDeCursos::darseDeBaja(string cursoId)
+{
+	if (this->autorizacion != Estudiante){
+			throw NoAuthorizado();
+	}
+
+	for (Curso curso : this->listaDeCursos)
+	{
+		if (cursoId.compare(curso.id) == 0){
+			curso.darseDeBaja(this->usuarioConectado.id);
+			return;
+		}
+	}
+
+	throw NoExiste();
+}
+
 void SistemaDeGestionDeCursos::acceder(string email, string contrasena)
 {
+	if (this->contadorDeAccesosFallidos >= 3){
+		throw SuperadoIntentos();
+	}
+
 	for (Usuario usuario : listaDeUsuarios)
 	{
-		if (usuario.email == email && usuario.contrasena == contrasena){
-			this->authorizacion = usuario.rol;
+		if (email.compare(usuario.email) == 0 && contrasena.compare(usuario.contrasena) == 0){
+			this->autorizacion = usuario.rol;
+			this->usuarioConectado = usuario;
 			return;
 		}
 	}
 	throw CredencialesIncorrectas();
 }
+
+void SistemaDeGestionDeCursos::registrar(Usuario usuario)
+{
+	if (this->autorizacion != Administrador){
+			throw NoAuthorizado();
+	}
+
+	this->listaDeUsuarios.push_back(usuario);
+}
+
+void SistemaDeGestionDeCursos::imprimirInformeEstadistico(string cursoId)
+{
+	if (this->autorizacion != Administrador){
+			throw NoAuthorizado();
+	}
+
+	for (Curso curso : this->listaDeCursos)
+	{
+		if (cursoId.compare(curso.id) == 0){
+			curso.estadistica.imprimirEstadisticas();
+			return;
+		}
+	}
+
+	throw NoExiste();
+
+}
+
+
 
 void SistemaDeGestionDeCursos::cargarCursos()
 {
@@ -106,6 +227,12 @@ void SistemaDeGestionDeCursos::cargarCursos()
 		curr_child = curr_child->NextSiblingElement();
 		vector<int> listaDePonentes = cargarListaDeInt(curr_child);
 
+		curr_child = curr_child->NextSiblingElement();
+		vector<int> listaDeEstudiantes = cargarListaDeInt(curr_child);
+
+		curr_child = curr_child->NextSiblingElement();
+		Estadistica estadistica = cargarEstadistica(curr_child);
+
 		Curso curso_nuevo(id,
 				          nombre,
 						  desc,
@@ -116,11 +243,31 @@ void SistemaDeGestionDeCursos::cargarCursos()
 						  listaDeEsperaDeEstud,
 						  listaDeAsistentes,
 						  ponentePrincipal,
-						  listaDePonentes);
+						  listaDePonentes,
+						  listaDeEstudiantes;
+						  estadistica);
 
 		this->listaDeCursos.push_back(curso_nuevo);
 	}
 }
+
+Estadistica SistemaDeGestionDeCursos::cargarEstadistica(tinyxml2::XMLElement *root)
+{
+	tinyxml2::XMLElement *curr_child = root->FirstChildElement();
+	const char *cursoId = curr_child->GetText();
+
+	curr_child = curr_child->NextSiblingElement();
+	int aforo = curr_child->IntText();
+
+	curr_child = curr_child->NextSiblingElement();
+	int numeroDeParticipantes= curr_child->IntText();
+
+	curr_child = curr_child->NextSiblingElement();
+	vector<int> calificacionesRecibidas = cargarListaDeInt(curr_child);
+
+	return Estadistica(cursoId, aforo, numeroDeParticipantes, calificacionesRecibidas);
+}
+
 
 time_t SistemaDeGestionDeCursos::convertirStringDatetime(const char *datetime_str)
 {
@@ -226,6 +373,14 @@ int SistemaDeGestionDeCursos::guardarCursos()
 		guardarListaDeElem<int>(&doc, listaDePonentes, curso.listaDePonentes);
 		curso_nuevo->InsertEndChild(listaDePonentes);
 
+		tinyxml2::XMLElement* listaDeEstudiantes = doc.NewElement("listaDeEstudiantes");
+		guardarListaDeElem<int>(&doc, listaDeEstudiantes, curso.listaDeEstudiantes);
+		curso_nuevo->InsertEndChild(listaDeEstudiantes);
+
+		tinyxml2::XMLElement* estadistica = doc.NewElement("estadistica");
+		guardarEstadistica(&doc, estadistica, curso.estadistica);
+		curso_nuevo->InsertEndChild(estadistica);
+
 		root->InsertEndChild(curso_nuevo);
 
 	}
@@ -292,4 +447,25 @@ int SistemaDeGestionDeCursos::guardarUsuarios()
 	doc.SaveFile(fichero_usuarios, false);
 
 	return doc.ErrorID();
+}
+
+int SistemaDeGestionDeCursos::guardarEstadistica(tinyxml2::XMLDocument *doc, tinyxml2::XMLElement *padre, Estadistica estadistica)
+{
+
+	tinyxml2::XMLElement* cursoId = (*doc).NewElement("cursoId");
+	cursoId->SetText(estadistica.cursoId);
+	padre->InsertEndChild(cursoId);
+
+	tinyxml2::XMLElement* aforo = (*doc).NewElement("aforo");
+	aforo->SetText(estadistica.aforo);
+	padre->InsertEndChild(aforo);
+
+	tinyxml2::XMLElement* numeroDeParticipantes = (*doc).NewElement("numeroDeParticipantes");
+	numeroDeParticipantes->SetText(estadistica.numeroDeParticipantes);
+	padre->InsertEndChild(numeroDeParticipantes);
+
+	tinyxml2::XMLElement* calificacionesRecibidas = (*doc).NewElement("califacionesRecibidas");
+	guardarListaDeElem<int>(doc, calificacionesRecibidas, estadistica.calificacionesRecibidas)
+
+	return (*doc).ErrorID();
 }
