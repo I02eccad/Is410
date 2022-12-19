@@ -1,14 +1,7 @@
-/*
- * SistemaDeGestionDeCursos.cpp
- *
- *  Created on: Nov 28, 2022
- *      Author: Michal Spiegel
- */
-
 #include "SistemaDeGestionDeCursos.h"
 #include <iostream>
 
-SistemaDeGestionDeCursos::SistemaDeGestionDeCursos()
+SistemaDeGestionDeCursos::SistemaDeGestionDeCursos() : usuarioConectado(NULL)
 {
 	// Cargar los datos de los XML ficheros a los vectores de datos dentro la clase
 	this->cargarCursos();
@@ -42,14 +35,22 @@ void SistemaDeGestionDeCursos::darDeAltaCurso(Curso curso)
 	this->listaDeCursos.push_back(curso);
 
 }
-void SistemaDeGestionDeCursos::darDeBajaCurso(Curso curso)
+void SistemaDeGestionDeCursos::darDeBajaCurso(string cursoId)
 {
 	if (!(this->autorizacion == Administrador || this->autorizacion == CoordinadorDeCursos)){
 		throw NoAuthorizado();
 	}
 
-	curso.isVisible = false;
+	for (int i=0; i<this->listaDeCursos.size(); i++)
+	{
+		if (cursoId.compare(this->listaDeCursos[i].id) == 0)
+		{
+			this->listaDeCursos[i].isVisible = false;
+			return;
+		}
+	}
 
+	throw CursoNoEncontrado();
 }
 
 void SistemaDeGestionDeCursos::modificarCurso(string cursoId, Curso curso_modificado)
@@ -156,6 +157,16 @@ void SistemaDeGestionDeCursos::acceder(string email, string contrasena)
 	throw CredencialesIncorrectas();
 }
 
+void SistemaDeGestionDeCursos::cerrarSesion()
+{
+	if (this->autorizacion == Visitante)
+	{
+		throw NoAuthorizado();
+	}
+	this->autorizacion = Visitante;
+	this->usuarioConectado = NULL;
+}
+
 void SistemaDeGestionDeCursos::registrar(Usuario usuario)
 {
 	if (this->autorizacion != Administrador){
@@ -204,6 +215,9 @@ void SistemaDeGestionDeCursos::cargarCursos()
 		const char *desc   = curr_child->GetText();
 
 		curr_child = curr_child->NextSiblingElement();
+		time_t fechaDeInicio = convertirStringDatetime(curr_child->GetText());
+
+		curr_child = curr_child->NextSiblingElement();
 		time_t fechaFinal = convertirStringDatetime(curr_child->GetText());
 
 		curr_child = curr_child->NextSiblingElement();
@@ -233,21 +247,22 @@ void SistemaDeGestionDeCursos::cargarCursos()
 		curr_child = curr_child->NextSiblingElement();
 		Estadistica estadistica = cargarEstadistica(curr_child);
 
-		Curso curso_nuevo(id,
-				          nombre,
-						  desc,
-						  fechaFinal,
-						  listaDeRecursosAV,
-						  aforo,
-						  precio,
-						  listaDeEsperaDeEstud,
-						  listaDeAsistentes,
-						  ponentePrincipal,
-						  listaDePonentes,
-						  listaDeEstudiantes;
-						  estadistica);
+		Curso cursoNuevo(id,
+				         nombre,
+						 desc,
+						 fechaDeInicio,
+						 fechaFinal,
+						 listaDeRecursosAV,
+						 aforo,
+						 precio,
+						 listaDeEsperaDeEstud,
+						 listaDeAsistentes,
+						 ponentePrincipal,
+						 listaDePonentes,
+						 listaDeEstudiantes,
+						 estadistica);
 
-		this->listaDeCursos.push_back(curso_nuevo);
+		this->listaDeCursos.push_back(cursoNuevo);
 	}
 }
 
@@ -340,6 +355,10 @@ int SistemaDeGestionDeCursos::guardarCursos()
 		tinyxml2::XMLElement* desc = doc.NewElement("descripcion");
 		desc->SetText(curso.descripcion);
 		curso_nuevo->InsertEndChild(desc);
+
+		tinyxml2::XMLElement* fechaDeInicio = doc.NewElement("fechaDeInicio");
+		fechaDeInicio->SetText(ctime(&curso.fechaDeInicio));
+		curso_nuevo->InsertEndChild(fechaDeInicio);
 
 		tinyxml2::XMLElement* fechaFinal = doc.NewElement("fechaFinal");
 		fechaFinal->SetText(ctime(&curso.fechaFinal));

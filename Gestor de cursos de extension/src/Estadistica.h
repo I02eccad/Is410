@@ -1,10 +1,3 @@
-/*
- * Estadistica.h
- *
- *  Created on: Dec 19, 2022
- *      Author: michal
- */
-
 #ifndef SRC_ESTADISTICA_H_
 #define SRC_ESTADISTICA_H_
 

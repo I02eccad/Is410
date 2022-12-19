@@ -1,21 +1,36 @@
-/*
- * Curso.cpp
- *
- *  Created on: Nov 28, 2022
- *      Author: michal
- *
- *  TODO: Anadir conversion a nombres en cambio de IDs de los usuarios en imprimir funcion
- */
-
 #include "Curso.h"
 #include <iostream>
 #include <algorithm>
 #include "Estadistica.h"
 
+Curso::Curso(const char *id,
+		     const char *nombre,
+			 const char *descripcion,
+			 time_t fechaDeInicio,
+			 time_t fechaFinal,
+			 int aforo,
+			 int precio) : estadistica(id, aforo)
+{
+	Curso::id = id;
+	Curso::nombre = nombre;
+	Curso::descripcion = descripcion;
+	Curso::fechaDeInicio = fechaDeInicio;
+	Curso::fechaFinal = fechaFinal;
+	Curso::recursosAudiovisuales = vector<const char *>();
+	Curso::aforo = aforo;
+	Curso::precio = precio;
+	Curso::listaDeEsperaDeEstud = vector<int>();
+	Curso::listaDeAsistentes = vector<int>();
+	Curso::ponentePrincipal = ponentePrincipal;
+	Curso::listaDePonentes = vector<int>();
+	Curso::listaDeEstudiantes = vector<int>();
+	//Curso::estadistica = Estadistica(id, aforo);
+}
 
 Curso::Curso(const char *id,
 		  const char *nombre,
 		  const char *descripcion,
+		  time_t fechaDeInicio,
 		  time_t fechaFinal,
 		  vector<const char*> recursosAudiovisuales,
 		  int aforo,
@@ -23,11 +38,12 @@ Curso::Curso(const char *id,
 		  vector<int> listaDeEsperaDeEstud,
 	      vector<int> listaDeAsistentes,
 	      int ponentePrincipal,
-	      vector<int> listaDePonentes)
+	      vector<int> listaDePonentes) : estadistica(id, aforo)
 {
 	Curso::id = id;
 	Curso::nombre = nombre;
 	Curso::descripcion = descripcion;
+	Curso::fechaDeInicio = fechaDeInicio;
 	Curso::fechaFinal = fechaFinal;
 	Curso::recursosAudiovisuales = recursosAudiovisuales;
 	Curso::aforo = aforo;
@@ -38,12 +54,13 @@ Curso::Curso(const char *id,
 	Curso::listaDePonentes = listaDePonentes;
 
 	Curso::listaDeEstudiantes = vector<int>();
-	Curso::estadistica = Estadistica(id, aforo);
+	//Curso::estadistica = Estadistica(id, aforo);
 }
 
 Curso::Curso(const char *id,
 		  const char *nombre,
 		  const char *descripcion,
+		  time_t fechaDeInicio,
 		  time_t fechaFinal,
 		  vector<const char*> recursosAudiovisuales,
 		  int aforo,
@@ -53,11 +70,12 @@ Curso::Curso(const char *id,
 	      int ponentePrincipal,
 	      vector<int> listaDePonentes,
 		  vector<int> listaDeEstudiantes,
-		  Estadistica estadistica)
+		  Estadistica estadistica) : estadistica(estadistica)
 {
 	Curso::id = id;
 	Curso::nombre = nombre;
 	Curso::descripcion = descripcion;
+	Curso::fechaDeInicio = fechaDeInicio;
 	Curso::fechaFinal = fechaFinal;
 	Curso::recursosAudiovisuales = recursosAudiovisuales;
 	Curso::aforo = aforo;
@@ -66,9 +84,8 @@ Curso::Curso(const char *id,
 	Curso::listaDeAsistentes = listaDeAsistentes;
 	Curso::ponentePrincipal = ponentePrincipal;
 	Curso::listaDePonentes = listaDePonentes;
-
 	Curso::listaDeEstudiantes = listaDeEstudiantes;
-	Curso::estadistica = estadistica;
+	//Curso::estadistica = estadistica;
 }
 
 void Curso::imprimirCursoFormateado()

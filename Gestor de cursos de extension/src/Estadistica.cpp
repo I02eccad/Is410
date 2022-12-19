@@ -1,10 +1,3 @@
-/*
- * Estadistica.cpp
- *
- *  Created on: Dec 19, 2022
- *      Author: michal
- */
-
 #include "Estadistica.h"
 #include <iostream>
 
