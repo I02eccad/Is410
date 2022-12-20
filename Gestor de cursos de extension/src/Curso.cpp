@@ -44,11 +44,12 @@ Curso::Curso(const char *id,
 	      int ponentePrincipal,
 	      vector<int> listaDePonentes,
 		  vector<int> listaDeEstudiantes,
-		  Estadistica estadistica)
+		  Estadistica estadistica,
+		  bool isVisible)
 {
-	Curso::id = id;
-	Curso::nombre = nombre;
-	Curso::descripcion = descripcion;
+	Curso::id = strdup(id);
+	Curso::nombre = strdup(nombre);
+	Curso::descripcion = strdup(descripcion);
 	Curso::fechaDeInicio = fechaDeInicio;
 	Curso::fechaFinal = fechaFinal;
 	Curso::recursosAudiovisuales = recursosAudiovisuales;
@@ -60,6 +61,7 @@ Curso::Curso(const char *id,
 	Curso::listaDePonentes = listaDePonentes;
 	Curso::listaDeEstudiantes = listaDeEstudiantes;
 	Curso::estadistica = estadistica;
+	Curso::isVisible = isVisible;
 }
 
 string Curso::time2str(time_t seconds){
@@ -73,7 +75,7 @@ string Curso::time2str(time_t seconds){
 
 void Curso::imprimirCursoFormateado()
 {
-	cout << "------------------------------------------" << endl;
+	cout << "************************************************" << endl;
 
 	cout << "ID: " << this->id << endl;
 	cout << "Nombre: " << this->nombre << endl;
@@ -112,7 +114,7 @@ void Curso::imprimirCursoFormateado()
 	}
 	cout << endl;
 
-	cout << "--------------------------------------------" << endl;
+	cout << "************************************************" << endl;
 }
 
 void Curso::subscribir(int estudianteId)
@@ -128,11 +130,12 @@ void Curso::subscribir(int estudianteId)
 
 void Curso::darseDeBaja(int estudianteId)
 {
-	auto position = std::find(this->listaDeEstudiantes.begin(), this->listaDeEstudiantes.end(), estudianteId);
-	if (position != this->listaDeEstudiantes.end())
+	for (int i=0; i<this->listaDeEstudiantes.size(); i++)
 	{
-		this->listaDeEstudiantes.erase(position);
-		this->estadistica.numeroDeParticipantes--;
+		if (estudianteId == this->listaDeEstudiantes[i]){
+			this->listaDeEstudiantes.erase(this->listaDeEstudiantes.begin() + i);
+			return;
+		}
 	}
 
 	throw NoSuscrito();
@@ -144,10 +147,14 @@ void Curso::asignarRecurso(char *recurso)
 }
 void Curso::retirarRecurso(char *recurso)
 {
-	auto position = std::find(this->recursosAudiovisuales.begin(), this->recursosAudiovisuales.end(), recurso);
-	if (position != this->recursosAudiovisuales.end())
+	string recStr(recurso);
+	for (int i=0; i<this->recursosAudiovisuales.size(); i++)
 	{
-		this->recursosAudiovisuales.erase(position);
+		string recCurStr(this->recursosAudiovisuales[i]);
+		if (recStr.compare(recCurStr) == 0){
+			this->recursosAudiovisuales.erase(this->recursosAudiovisuales.begin() + i);
+			return;
+		}
 	}
 
 	throw RecursoNoExiste();

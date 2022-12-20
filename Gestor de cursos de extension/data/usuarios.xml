@@ -1,1 +1,29 @@
-<usuarios/>
+<usuarios>
+    <usuario>
+        <id>1</id>
+        <contrasena>password</contrasena>
+        <nombre>test</nombre>
+        <apellidos>test</apellidos>
+        <dni>testdni</dni>
+        <email>test@test.com</email>
+        <rol>1</rol>
+    </usuario>
+    <usuario>
+        <id>2</id>
+        <contrasena>admin</contrasena>
+        <nombre>admin</nombre>
+        <apellidos>admin</apellidos>
+        <dni>admindni</dni>
+        <email>admin@admin.com</email>
+        <rol>4</rol>
+    </usuario>
+    <usuario>
+        <id>3</id>
+        <contrasena>password</contrasena>
+        <nombre>test2</nombre>
+        <apellidos>test</apellidos>
+        <dni>122BBS1</dni>
+        <email>test2@test.com</email>
+        <rol>3</rol>
+    </usuario>
+</usuarios>

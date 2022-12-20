@@ -1,65 +1,70 @@
 <cursos>
     <curso>
-        <id>-------
-d</id>
-        <nombre>Cálculo</nombre>
-        <descripcion>Esto es un curso de Cálculo I.</descripcion>
-        <fechaDeInicio>20.12.2022-15:29:06</fechaDeInicio>
-        <fechaFinal>20.12.2022-15:29:06</fechaFinal>
-        <recursosAudiovisuales/>
+        <id>JAVA22</id>
+        <nombre>JavaProgramming</nombre>
+        <descripcion>This-is-a-java-programming-course</descripcion>
+        <fechaDeInicio>11.10.2022-01:10:10</fechaDeInicio>
+        <fechaFinal>11.10.2023-01:10:10</fechaFinal>
+        <recursosAudiovisuales>
+            <elem>microfono</elem>
+        </recursosAudiovisuales>
         <aforo>40</aforo>
-        <precio>60</precio>
+        <precio>400</precio>
         <listaDeEsperaDeEstud/>
         <listaDeAsistentes>
-            <elem>12</elem>
-            <elem>121</elem>
-            <elem>122</elem>
-            <elem>324</elem>
+            <elem>1</elem>
+            <elem>2</elem>
+            <elem>3</elem>
         </listaDeAsistentes>
         <ponentePrincipal>-1</ponentePrincipal>
         <listaDePonentes>
-            <elem>12321</elem>
-            <elem>232</elem>
-            <elem>2323</elem>
-            <elem>232</elem>
+            <elem>1</elem>
+            <elem>2</elem>
+            <elem>3</elem>
+            <elem>123</elem>
         </listaDePonentes>
-        <listaDeEstudiantes/>
+        <listaDeEstudiantes>
+            <elem>1</elem>
+        </listaDeEstudiantes>
         <estadistica>
-            <cursoId>123HD</cursoId>
+            <cursoId>JAVA22</cursoId>
             <aforo>40</aforo>
-            <numeroDeParticipantes>0</numeroDeParticipantes>
+            <numeroDeParticipantes>4</numeroDeParticipantes>
             <califacionesRecibidas/>
         </estadistica>
+        <isVisible>0</isVisible>
     </curso>
     <curso>
-        <id>123HD</id>
-        <nombre>Cálculo</nombre>
-        <descripcion>Esto es un curso de Cálculo I.</descripcion>
-        <fechaDeInicio>20.12.2022-15:29:21</fechaDeInicio>
-        <fechaFinal>20.12.2022-15:29:21</fechaFinal>
-        <recursosAudiovisuales/>
+        <id>PYTHON1</id>
+        <nombre>Python</nombre>
+        <descripcion>Esto_es_un_curso_de_Python</descripcion>
+        <fechaDeInicio>10.10.2022-11:10:10</fechaDeInicio>
+        <fechaFinal>10.10.2023-11:10:10</fechaFinal>
+        <recursosAudiovisuales>
+            <elem>microfono</elem>
+        </recursosAudiovisuales>
         <aforo>40</aforo>
         <precio>60</precio>
         <listaDeEsperaDeEstud/>
         <listaDeAsistentes>
-            <elem>12</elem>
-            <elem>121</elem>
-            <elem>122</elem>
-            <elem>324</elem>
+            <elem>1233</elem>
+            <elem>1235</elem>
         </listaDeAsistentes>
         <ponentePrincipal>-1</ponentePrincipal>
         <listaDePonentes>
-            <elem>12321</elem>
-            <elem>232</elem>
-            <elem>2323</elem>
-            <elem>232</elem>
+            <elem>1234</elem>
+            <elem>1233</elem>
+            <elem>1235</elem>
         </listaDePonentes>
-        <listaDeEstudiantes/>
+        <listaDeEstudiantes>
+            <elem>1</elem>
+        </listaDeEstudiantes>
         <estadistica>
-            <cursoId>123HD</cursoId>
+            <cursoId>PYTHON1</cursoId>
             <aforo>40</aforo>
-            <numeroDeParticipantes>0</numeroDeParticipantes>
+            <numeroDeParticipantes>1</numeroDeParticipantes>
             <califacionesRecibidas/>
         </estadistica>
+        <isVisible>1</isVisible>
     </curso>
 </cursos>

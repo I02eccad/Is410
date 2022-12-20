@@ -37,7 +37,8 @@ public:
 		  int ponentePrincipal,
 		  vector<int> listaDePonentes,
 	      vector<int> listaDeEstudiantes,
-	      Estadistica estadistica);
+	      Estadistica estadistica,
+		  bool isVisible);
 
 	const char *id;
 	const char *nombre;

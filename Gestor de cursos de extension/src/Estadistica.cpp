@@ -26,7 +26,7 @@ Estadistica::Estadistica(const char *cursoId, int aforo, int numeroDeParticipant
 
 void Estadistica::imprimirEstadisticas()
 {
-	cout << "------------------------------------------" << endl;
+	cout << "************************************************" << endl;
 
 	cout << "Curso ID: " << this->cursoId << endl;
 
@@ -40,7 +40,7 @@ void Estadistica::imprimirEstadisticas()
 		cout << "Calificación Media: " << calcularMedia(this->calificacionesRecibidas) << endl;
 	}
 
-	cout << "--------------------------------------------" << endl;
+	cout << "************************************************" << endl;
 }
 
 double Estadistica::calcularMedia(vector<int> numeros)

@@ -33,7 +33,7 @@ class SistemaDeGestionDeCursos {
 
 
 public:
-	Rol autorizacion = Administrador;
+	Rol autorizacion = Visitante;
 	Usuario usuarioConectado = Usuario();
 	int contadorDeAccesosFallidos = 0;
 

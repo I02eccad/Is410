@@ -8,28 +8,28 @@
 
 using namespace std;
 
-void menu(SistemaDeGestionDeCursos sistema, vector<string>);
-void realizar_accion(SistemaDeGestionDeCursos sistema, string comando);
-void ayuda(SistemaDeGestionDeCursos sistema, vector<string> args);
+void menu(SistemaDeGestionDeCursos *sistema, vector<string>);
+void realizar_accion(SistemaDeGestionDeCursos *sistema, string comando);
+void ayuda(SistemaDeGestionDeCursos *sistema, vector<string> args);
 void dividir(string const &str, const char delim, vector<string> &out);
 vector<int> cargarListaDeInt(string str_lista);
-void acceder(SistemaDeGestionDeCursos, vector<string>);
-void verCursos(SistemaDeGestionDeCursos, vector<string>);
-void cerrarSesion(SistemaDeGestionDeCursos, vector<string>);
-void subscribirse(SistemaDeGestionDeCursos, vector<string>);
-void darseDeBaja(SistemaDeGestionDeCursos, vector<string>);
-void asignarRecurso(SistemaDeGestionDeCursos, vector<string>);
-void retirarRecurso(SistemaDeGestionDeCursos, vector<string>);
-void crearCurso(SistemaDeGestionDeCursos, vector<string>);
-void eliminarCurso(SistemaDeGestionDeCursos, vector<string>);
-void registrar(SistemaDeGestionDeCursos, vector<string>);
-void imprimirInformeEstadistico(SistemaDeGestionDeCursos, vector<string>);
+void acceder(SistemaDeGestionDeCursos*, vector<string>);
+void verCursos(SistemaDeGestionDeCursos*, vector<string>);
+void cerrarSesion(SistemaDeGestionDeCursos*, vector<string>);
+void subscribirse(SistemaDeGestionDeCursos*, vector<string>);
+void darseDeBaja(SistemaDeGestionDeCursos*, vector<string>);
+void asignarRecurso(SistemaDeGestionDeCursos*, vector<string>);
+void retirarRecurso(SistemaDeGestionDeCursos*, vector<string>);
+void crearCurso(SistemaDeGestionDeCursos*, vector<string>);
+void eliminarCurso(SistemaDeGestionDeCursos*, vector<string>);
+void registrar(SistemaDeGestionDeCursos*, vector<string>);
+void imprimirInformeEstadistico(SistemaDeGestionDeCursos*, vector<string>);
 time_t convertirStringDatetime(char *datetime_str);
 
 
 
 
-map<string, function<void(SistemaDeGestionDeCursos, vector<string>)>> comandos = {
+map<string, function<void(SistemaDeGestionDeCursos*, vector<string>)>> comandos = {
 	{"ayuda", ayuda},
 	{ "menu", menu},
     { "acceder", acceder},
@@ -57,26 +57,7 @@ int main ()
 {
 	SistemaDeGestionDeCursos sistema = SistemaDeGestionDeCursos();
 
-	vector<const char*> vect1{"camara", "microfono"};
-	vector<int> vect2{12321, 232, 2323, 232};
-	vector<int> vect3{12, 121, 122, 324};
-	vector<int> vect4{123, 1234, 4344};
-
-	Curso calculo("123HD",
-					      "Cálculo",
-			             "Esto es un curso de Cálculo I.",
-						 time(NULL),
-						 time(NULL),
-						 40,
-						 60,
-						 123456,
-						 vect2,
-						 vect3);
-
-
-	sistema.darDeAltaCurso(calculo);
-
-	ayuda(sistema, vector<string>());
+	ayuda(&sistema, vector<string>());
 
 	string comando = "";
 	getline(cin, comando);
@@ -84,7 +65,7 @@ int main ()
 	while (comando.compare("salir"))
 	{
 		try {
-			realizar_accion(sistema, comando);
+			realizar_accion(&sistema, comando);
 		} catch (exception& e){
 			cout << e.what() << endl;
 		}
@@ -94,7 +75,7 @@ int main ()
 	sistema.guardarDatos();
 }
 
-void realizar_accion(SistemaDeGestionDeCursos sistema, string comando)
+void realizar_accion(SistemaDeGestionDeCursos *sistema, string comando)
 {
 	vector<string> comandoDividido;
 	dividir(comando, ' ', comandoDividido);
@@ -108,53 +89,63 @@ void realizar_accion(SistemaDeGestionDeCursos sistema, string comando)
 	}
 }
 
-void menu(SistemaDeGestionDeCursos sistema, vector<string> args)
+void menu(SistemaDeGestionDeCursos *sistema, vector<string> args)
 {
-	switch(sistema.autorizacion){
+	switch(sistema->autorizacion){
 
 		case Visitante:
-			cout << "----------------------------------------------" << endl;
+			cout << "************************************************" << endl;
 			cout << "Como Visitante tiene las siguientes opciones:" << endl;
+			cout << "\t" << "ayuda" << endl;
+			cout << "\t" << "menu" << endl;
 			cout << "\t" << "acceder <email> <contraseña>" << endl;
 			cout << "\t" << "ver-cursos" << endl;
-			cout << "----------------------------------------------" << endl;
+			cout << "************************************************" << endl;
 
 			break;
 
 		case Estudiante:
-			cout << "----------------------------------------------" << endl;
+			cout << "************************************************" << endl;
 			cout << "Como Estudiante tiene las siguientes opciones:" << endl;
+			cout << "\t" << "ayuda" << endl;
+			cout << "\t" << "menu" << endl;
 			cout << "\t" << "cerrar-sesion" << endl;
 			cout << "\t" << "ver-cursos" << endl;
 			cout << "\t" << "subscribirse <Id del curso>" << endl;
 			cout << "\t" << "darse-de-baja <Id del curso>" << endl;
-			cout << "----------------------------------------------" << endl;
+			cout << "************************************************" << endl;
 			break;
 
 		case CoordinadorDeCursos:
-			cout << "----------------------------------------------" << endl;
+			cout << "************************************************" << endl;
 			cout << "Como Coordinador de Cursos tiene las siguientes opciones:" << endl;
+			cout << "\t" << "ayuda" << endl;
+			cout << "\t" << "menu" << endl;
 			cout << "\t" << "cerrar-sesion" << endl;
 			cout << "\t" << "ver-cursos" << endl;
 			cout << "\t" << "asignar-recurso <Id del curso> <Nombre del recurso>" << endl;
 			cout << "\t" << "retirar-recurso <Id del curso> <Nombre del recurso>" << endl;
-			cout << "----------------------------------------------" << endl;
+			cout << "************************************************" << endl;
 			break;
 
 		case CoordinadorDeRecursos:
-			cout << "----------------------------------------------" << endl;
+			cout << "************************************************" << endl;
 			cout << "Como Coordinador de Recursos tiene las siguientes opciones:" << endl;
+			cout << "\t" << "ayuda" << endl;
+			cout << "\t" << "menu" << endl;
 			cout << "\t" << "cerrar-sesion" << endl;
 			cout << "\t" << "ver-cursos" << endl;
 			cout << "\t" << "crear-curso <Id del curso> <Nombre del recurso> <Descripción> "
 					"                    <Fecha de Inicio> <Fecha final> <Aforo> <Precio> <Ponente Principal> <[Lista,de,Pontentes]> <[Lista,de,Asistentes]>" << endl;
 			cout << "\t" << "eliminar-curso <Id del curso>" << endl;
-			cout << "----------------------------------------------" << endl;
+			cout << "************************************************" << endl;
 			break;
 
 		case Administrador:
-			cout << "----------------------------------------------" << endl;
+			cout << "************************************************" << endl;
 			cout << "Como Administrador tiene las siguientes opciones:" << endl;
+			cout << "\t" << "ayuda" << endl;
+			cout << "\t" << "menu" << endl;
 			cout << "\t" << "cerrar-sesion" << endl;
 			cout << "\t" << "ver-cursos" << endl;
 			cout << "\t" << "crear-curso <Id del curso> <Nombre del recurso> <Descripción> "
@@ -164,17 +155,32 @@ void menu(SistemaDeGestionDeCursos sistema, vector<string> args)
 			cout << "\t" << "retirar-recurso <Id del curso> <Nombre del recurso>" << endl;
 			cout << "\t" << "registrar <Id del usuario> <Contraseña> <Nombre> <Apellidos> <DNI> <Email> <Rol>" << endl;
 			cout << "\t" << "informe-estadistico <Id del curso>" << endl;
-			cout << "----------------------------------------------" << endl;
+			cout << "************************************************" << endl;
 
 			break;
 	}
 }
 
-void ayuda(SistemaDeGestionDeCursos sistema, vector<string> args)
+void ayuda(SistemaDeGestionDeCursos *sistema, vector<string> args)
 {
-	cout << "-----------------USO--------------------" << endl;
-	cout << "" << endl;
-	cout << "----------------------------------------" << endl;
+	cout << "**********************USO***********************" << endl;
+	cout << "El sistema funcione en la manera de que puede\n"
+			"escribir comandos de texto dentro del terminal.\n"
+			"\nSi no sabe que comandos puede usar, puede utiliar \n"
+			"el comando 'menu' para ver un menu de los distintos comandos \n"
+			"que un usuario con su rol puede utilizar.\n"
+			"\nLos comandos siempre tienen la siguienta forma:\n"
+			"\n\t nombre_del_comando <argumentos obligatorios>\n"
+			"\nPara salir de la aplicación puede usar el comando 'salir'\n"
+			"\nNotas:\n"
+			"1. Todavia, en esta version de sistema, dentro de un argumento\n"
+			"   no puedes escribir carácter de espacio.\n"
+			"   Siempre un argumento esta una palabra de números, letras o \n"
+			"   otras carácteros sin cáracteros de espacio\n"
+			"2. Si el argumento es de la forma de la lista como el siguente: [Lista,de,algo]\n"
+			"   Tiene que escribir los elementos solamente divididos con el carácter de ','\n"
+			"   No es posible usar los cáracteros de espacios dentro de la lista.\n" << endl;
+	cout << "************************************************" << endl;
 }
 
 void dividir(string const &str, const char delim,
@@ -188,71 +194,74 @@ void dividir(string const &str, const char delim,
     }
 }
 
-void acceder(SistemaDeGestionDeCursos sistema, vector<string> args)
+void acceder(SistemaDeGestionDeCursos *sistema, vector<string> args)
 {
 	if (args.size() != 3){
 		throw ArgsIncorrectos();
 	}
 
-	sistema.acceder(args[1], args[2]);
+	sistema->acceder(args[1], args[2]);
 	cout << "Ha iniciado sesión correctamente!" << endl;
 }
-void verCursos(SistemaDeGestionDeCursos sistema, vector<string> args)
+void verCursos(SistemaDeGestionDeCursos *sistema, vector<string> args)
 {
 	if (args.size() != 1){
 		throw ArgsIncorrectos();
 	}
+	cout << "cursos:" << endl;
+	cout << "************************************************" << endl;
+	sistema->verLosCursos();
+	cout << "************************************************" << endl;
 
-	sistema.verLosCursos();
 }
-void cerrarSesion(SistemaDeGestionDeCursos sistema, vector<string> args)
+void cerrarSesion(SistemaDeGestionDeCursos *sistema, vector<string> args)
 {
 	if (args.size() != 1){
 		throw ArgsIncorrectos();
 	}
 
-	sistema.cerrarSesion();
+	sistema->cerrarSesion();
 	cout << "Se ha desconectado correctamente!" << endl;
 }
 
-void subscribirse(SistemaDeGestionDeCursos sistema, vector<string> args)
+void subscribirse(SistemaDeGestionDeCursos *sistema, vector<string> args)
 {
 	if (args.size() != 2){
 		throw ArgsIncorrectos();
 	}
 
-	sistema.subscribirse(args[1]);
+	sistema->subscribirse(args[1]);
 	cout << "Se ha suscrito correctamente!" << endl;
 }
 
-void darseDeBaja(SistemaDeGestionDeCursos sistema, vector<string> args)
+void darseDeBaja(SistemaDeGestionDeCursos *sistema, vector<string> args)
 {
 	if (args.size() != 2){
 		throw ArgsIncorrectos();
 	}
 
-	sistema.darseDeBaja(args[1]);
+	sistema->darseDeBaja(args[1]);
 	cout << "Se ha dado de baja correctamente!" << endl;
 }
-void asignarRecurso(SistemaDeGestionDeCursos sistema, vector<string> args)
+void asignarRecurso(SistemaDeGestionDeCursos *sistema, vector<string> args)
 {
 	if (args.size() != 3){
 		throw ArgsIncorrectos();
 	}
 
-	sistema.asignarRecursoACurso(args[1], (char *) args[2].c_str());
+	sistema->asignarRecursoACurso(args[1], (char *) args[2].c_str());
 	cout << "Se ha asignado el recurso correctamente!" << endl;
 }
-void retirarRecurso(SistemaDeGestionDeCursos sistema, vector<string> args)
+void retirarRecurso(SistemaDeGestionDeCursos *sistema, vector<string> args)
 {
 	if (args.size() != 3){
 		throw ArgsIncorrectos();
 	}
 
-	sistema.asignarRecursoACurso(args[1], (char *) args[2].c_str());
+	sistema->retirarRecursoDeCurso(args[1], (char *) args[2].c_str());
 	cout << "Se ha retirado el recurso correctamente!" << endl;
 }
-void crearCurso(SistemaDeGestionDeCursos sistema, vector<string> args)
+void crearCurso(SistemaDeGestionDeCursos *sistema, vector<string> args)
 {
 	if (args.size() != 11){
 		throw ArgsIncorrectos();
@@ -269,7 +278,7 @@ void crearCurso(SistemaDeGestionDeCursos sistema, vector<string> args)
 					 cargarListaDeInt(args[9]),
 					 cargarListaDeInt(args[10]));
 
-	sistema.darDeAltaCurso(cursoNuevo);
+	sistema->darDeAltaCurso(cursoNuevo);
 	cout << "Se ha creado el curso correctamente!" << endl;
 
 }
@@ -287,7 +296,7 @@ vector<int> cargarListaDeInt(string str_lista)
 		throw ArgsIncorrectos();
 	}
 	vector<string> resultStr;
-	dividir(str_lista.substr(1, str_lista.size() - 1), ',', resultStr);
+	dividir(str_lista.substr(1, str_lista.size() - 2), ',', resultStr);
 
 	vector<int> result = vector<int>();
 	for (string elem : resultStr)
@@ -301,16 +310,16 @@ vector<int> cargarListaDeInt(string str_lista)
 	return result;
 }
 
-void eliminarCurso(SistemaDeGestionDeCursos sistema, vector<string> args)
+void eliminarCurso(SistemaDeGestionDeCursos *sistema, vector<string> args)
 {
 	if (args.size() != 2){
 		throw ArgsIncorrectos();
 	}
 
-	sistema.darDeBajaCurso(args[1]);
+	sistema->darDeBajaCurso(args[1]);
 	cout << "Se ha eliminado el curso correctamente!" << endl;
 }
-void registrar(SistemaDeGestionDeCursos sistema, vector<string> args)
+void registrar(SistemaDeGestionDeCursos *sistema, vector<string> args)
 {
 	if (args.size() != 8){
 		throw ArgsIncorrectos();
@@ -325,16 +334,16 @@ void registrar(SistemaDeGestionDeCursos sistema, vector<string> args)
 			  args[5].c_str(),
 			  args[6].c_str(),
 			  rol);
-	sistema.registrar(usuarioNuevo);
+	sistema->registrar(usuarioNuevo);
 	cout << "El usuario se ha registrado con exíto!" << endl;
 }
-void imprimirInformeEstadistico(SistemaDeGestionDeCursos sistema, vector<string> args)
+void imprimirInformeEstadistico(SistemaDeGestionDeCursos *sistema, vector<string> args)
 {
 	if (args.size() != 2){
 		throw ArgsIncorrectos();
 	}
 
-	sistema.imprimirInformeEstadistico(args[1]);
+	sistema->imprimirInformeEstadistico(args[1]);
 }
 
 time_t convertirStringDatetime(char *datetime_str)

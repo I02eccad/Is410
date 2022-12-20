@@ -1,0 +1,79 @@
+CURSO
+
+input - crear curso nuevo, imprimir
+ouput - imprimir output
+
+input - crear curso, subscribir estudiante
+output - estudiante esta en la lista
+
+input - crear curso, subscribir estudiante 1, subscribir estudiante 2, darse de baja estudiante 1
+ouput - estudiante 1 no esta en la lista pero estudiante 2 si
+
+input - crear curso, asignar recurso
+output - recurso esta en la lista
+
+input - crear curso, asignar recurso 1, asignar recurso 2, retirar estudiante 1
+ouput - recurso 1 no esta en la lista pero recurso 2 si
+
+USUARIO 
+
+ESTADISTICA
+
+input - crear estadistica, imprimir
+output - imprimir output
+
+input - calcular media de grados
+ouput - el medio correcto
+
+SISTEMA
+
+input - crear sistema
+output - soy visitante
+
+input - crear sistema, ver los cursos
+output - comprobar output
+
+input - crear sistema, soy administrador, acceder
+ouput - error
+
+input - crear sistema, soy visitante, acceder correctamente
+output - soy otro usuario
+
+input - crear sistema, soy visitante, acceder incorrectamente
+output - error
+
+input - crear sistema, soy visitante, acceder correctamente, cerrar-sesion
+output - soy Visistante
+
+input - crear sistema, soy visitante, cerrar-sesion
+output - error
+
+input - crear sistema, registrar
+output - usuario esta en la lista de usuarios
+
+input - crear sistema, acceder, dar de alta curso
+output - el curso nuevo esta en la lista de cursos
+ 
+input - crear sistema, acceder, dar de alta curso, dar de baja curso
+output - sistema no es en ver-cursos output, esta todavia en la lista de cursos
+
+input - crear sistema, acceder, dar de alta curso, modificar curso
+output - el curso esta todavia en la lista de cursos, y esta modificado
+
+input - crear sistema, acceder estudiante, subscribir se curso
+output - el estudiante esta en la lista de estudiantes del curso
+
+input - crear sistema, acceder estudiante, subscribir se curso, darse de baja del curso
+output - el estudiante no esta en la lista de estudiantes del curso
+
+input - crear sistema, acceder, dar de alta un curso, asignar recurso
+output - recurso esta en la lista de recursos
+
+
+input - crear sistema, acceder, dar de alta un curso, asignar recurso, retirar recurso
+output - recurso no esta en la lista de recursos
+
+input - crear sistema, acceder, dar de alta un curso, imprimir estadisticas
+output - comprobar el output de imprimir
+
+
