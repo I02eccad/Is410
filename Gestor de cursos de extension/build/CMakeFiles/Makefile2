@@ -64,6 +64,7 @@ CMAKE_BINARY_DIR = "/home/michal/Desktop/SCHOOL/CÓRDOBA/Ingeniría_del_Software
 
 # The main recursive "all" target.
 all: CMakeFiles/iniciar_sistema.dir/all
+all: CMakeFiles/probar_sistema.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -72,6 +73,7 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/iniciar_sistema.dir/clean
+clean: CMakeFiles/probar_sistema.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -99,6 +101,32 @@ iniciar_sistema: CMakeFiles/iniciar_sistema.dir/rule
 CMakeFiles/iniciar_sistema.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/clean
 .PHONY : CMakeFiles/iniciar_sistema.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/probar_sistema.dir
+
+# All Build rule for target.
+CMakeFiles/probar_sistema.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/michal/Desktop/SCHOOL/CÓRDOBA/Ingeniría_del_Software/Is410/Gestor de cursos de extension/build/CMakeFiles" --progress-num=8,9,10,11,12,13 "Built target probar_sistema"
+.PHONY : CMakeFiles/probar_sistema.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/probar_sistema.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/michal/Desktop/SCHOOL/CÓRDOBA/Ingeniría_del_Software/Is410/Gestor de cursos de extension/build/CMakeFiles" 6
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/probar_sistema.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/michal/Desktop/SCHOOL/CÓRDOBA/Ingeniría_del_Software/Is410/Gestor de cursos de extension/build/CMakeFiles" 0
+.PHONY : CMakeFiles/probar_sistema.dir/rule
+
+# Convenience name for target.
+probar_sistema: CMakeFiles/probar_sistema.dir/rule
+.PHONY : probar_sistema
+
+# clean rule for target.
+CMakeFiles/probar_sistema.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/clean
+.PHONY : CMakeFiles/probar_sistema.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

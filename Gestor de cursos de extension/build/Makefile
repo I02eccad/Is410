@@ -129,6 +129,19 @@ iniciar_sistema/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/build
 .PHONY : iniciar_sistema/fast
 
+#=============================================================================
+# Target rules for targets named probar_sistema
+
+# Build rule for target.
+probar_sistema: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 probar_sistema
+.PHONY : probar_sistema
+
+# fast build rule for target.
+probar_sistema/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/build
+.PHONY : probar_sistema/fast
+
 lib/tinyxml2.o: lib/tinyxml2.cpp.o
 .PHONY : lib/tinyxml2.o
 
@@ -153,12 +166,37 @@ lib/tinyxml2.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/lib/tinyxml2.cpp.s
 .PHONY : lib/tinyxml2.cpp.s
 
+pruebas/pruebas.o: pruebas/pruebas.cpp.o
+.PHONY : pruebas/pruebas.o
+
+# target to build an object file
+pruebas/pruebas.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/pruebas/pruebas.cpp.o
+.PHONY : pruebas/pruebas.cpp.o
+
+pruebas/pruebas.i: pruebas/pruebas.cpp.i
+.PHONY : pruebas/pruebas.i
+
+# target to preprocess a source file
+pruebas/pruebas.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/pruebas/pruebas.cpp.i
+.PHONY : pruebas/pruebas.cpp.i
+
+pruebas/pruebas.s: pruebas/pruebas.cpp.s
+.PHONY : pruebas/pruebas.s
+
+# target to generate assembly for a file
+pruebas/pruebas.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/pruebas/pruebas.cpp.s
+.PHONY : pruebas/pruebas.cpp.s
+
 src/Curso.o: src/Curso.cpp.o
 .PHONY : src/Curso.o
 
 # target to build an object file
 src/Curso.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/src/Curso.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/src/Curso.cpp.o
 .PHONY : src/Curso.cpp.o
 
 src/Curso.i: src/Curso.cpp.i
@@ -167,6 +205,7 @@ src/Curso.i: src/Curso.cpp.i
 # target to preprocess a source file
 src/Curso.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/src/Curso.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/src/Curso.cpp.i
 .PHONY : src/Curso.cpp.i
 
 src/Curso.s: src/Curso.cpp.s
@@ -175,6 +214,7 @@ src/Curso.s: src/Curso.cpp.s
 # target to generate assembly for a file
 src/Curso.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/src/Curso.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/src/Curso.cpp.s
 .PHONY : src/Curso.cpp.s
 
 src/Estadistica.o: src/Estadistica.cpp.o
@@ -183,6 +223,7 @@ src/Estadistica.o: src/Estadistica.cpp.o
 # target to build an object file
 src/Estadistica.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/src/Estadistica.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/src/Estadistica.cpp.o
 .PHONY : src/Estadistica.cpp.o
 
 src/Estadistica.i: src/Estadistica.cpp.i
@@ -191,6 +232,7 @@ src/Estadistica.i: src/Estadistica.cpp.i
 # target to preprocess a source file
 src/Estadistica.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/src/Estadistica.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/src/Estadistica.cpp.i
 .PHONY : src/Estadistica.cpp.i
 
 src/Estadistica.s: src/Estadistica.cpp.s
@@ -199,6 +241,7 @@ src/Estadistica.s: src/Estadistica.cpp.s
 # target to generate assembly for a file
 src/Estadistica.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/src/Estadistica.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/src/Estadistica.cpp.s
 .PHONY : src/Estadistica.cpp.s
 
 src/SistemaDeGestionDeCursos.o: src/SistemaDeGestionDeCursos.cpp.o
@@ -207,6 +250,7 @@ src/SistemaDeGestionDeCursos.o: src/SistemaDeGestionDeCursos.cpp.o
 # target to build an object file
 src/SistemaDeGestionDeCursos.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/src/SistemaDeGestionDeCursos.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/src/SistemaDeGestionDeCursos.cpp.o
 .PHONY : src/SistemaDeGestionDeCursos.cpp.o
 
 src/SistemaDeGestionDeCursos.i: src/SistemaDeGestionDeCursos.cpp.i
@@ -215,6 +259,7 @@ src/SistemaDeGestionDeCursos.i: src/SistemaDeGestionDeCursos.cpp.i
 # target to preprocess a source file
 src/SistemaDeGestionDeCursos.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/src/SistemaDeGestionDeCursos.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/src/SistemaDeGestionDeCursos.cpp.i
 .PHONY : src/SistemaDeGestionDeCursos.cpp.i
 
 src/SistemaDeGestionDeCursos.s: src/SistemaDeGestionDeCursos.cpp.s
@@ -223,6 +268,7 @@ src/SistemaDeGestionDeCursos.s: src/SistemaDeGestionDeCursos.cpp.s
 # target to generate assembly for a file
 src/SistemaDeGestionDeCursos.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/src/SistemaDeGestionDeCursos.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/src/SistemaDeGestionDeCursos.cpp.s
 .PHONY : src/SistemaDeGestionDeCursos.cpp.s
 
 src/Usuario.o: src/Usuario.cpp.o
@@ -231,6 +277,7 @@ src/Usuario.o: src/Usuario.cpp.o
 # target to build an object file
 src/Usuario.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/src/Usuario.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/src/Usuario.cpp.o
 .PHONY : src/Usuario.cpp.o
 
 src/Usuario.i: src/Usuario.cpp.i
@@ -239,6 +286,7 @@ src/Usuario.i: src/Usuario.cpp.i
 # target to preprocess a source file
 src/Usuario.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/src/Usuario.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/src/Usuario.cpp.i
 .PHONY : src/Usuario.cpp.i
 
 src/Usuario.s: src/Usuario.cpp.s
@@ -247,6 +295,7 @@ src/Usuario.s: src/Usuario.cpp.s
 # target to generate assembly for a file
 src/Usuario.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/iniciar_sistema.dir/build.make CMakeFiles/iniciar_sistema.dir/src/Usuario.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/probar_sistema.dir/build.make CMakeFiles/probar_sistema.dir/src/Usuario.cpp.s
 .PHONY : src/Usuario.cpp.s
 
 src/main.o: src/main.cpp.o
@@ -282,9 +331,13 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... iniciar_sistema"
+	@echo "... probar_sistema"
 	@echo "... lib/tinyxml2.o"
 	@echo "... lib/tinyxml2.i"
 	@echo "... lib/tinyxml2.s"
+	@echo "... pruebas/pruebas.o"
+	@echo "... pruebas/pruebas.i"
+	@echo "... pruebas/pruebas.s"
 	@echo "... src/Curso.o"
 	@echo "... src/Curso.i"
 	@echo "... src/Curso.s"

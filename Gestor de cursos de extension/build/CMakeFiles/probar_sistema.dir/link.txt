@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/probar_sistema.dir/pruebas/pruebas.cpp.o CMakeFiles/probar_sistema.dir/src/Curso.cpp.o CMakeFiles/probar_sistema.dir/src/Estadistica.cpp.o CMakeFiles/probar_sistema.dir/src/SistemaDeGestionDeCursos.cpp.o CMakeFiles/probar_sistema.dir/src/Usuario.cpp.o -o probar_sistema 
