@@ -1,16 +1,23 @@
 #include "Estadistica.h"
 #include <iostream>
-
-Estadistica::Estadistica(const char *cursoId, int aforo) {
-	Estadistica::cursoId = cursoId;
-	Estadistica::aforo = aforo;
+#include <string.h>
+Estadistica::Estadistica()
+{
+	Estadistica::cursoId = "";
+	Estadistica::aforo = -1;
 	Estadistica::numeroDeParticipantes = -1;
+	Estadistica::calificacionesRecibidas = vector<int>();
+}
+Estadistica::Estadistica(const char *cursoId, int aforo) {
+	Estadistica::cursoId = strdup(cursoId);
+	Estadistica::aforo = aforo;
+	Estadistica::numeroDeParticipantes = 0;
 	Estadistica::calificacionesRecibidas = vector<int>();
 }
 
 Estadistica::Estadistica(const char *cursoId, int aforo, int numeroDeParticipantes, vector<int> calificacionesRecibidas)
 {
-	Estadistica::cursoId = cursoId;
+	Estadistica::cursoId = strdup(cursoId);
 	Estadistica::aforo = aforo;
 	Estadistica::numeroDeParticipantes = numeroDeParticipantes;
 	Estadistica::calificacionesRecibidas = calificacionesRecibidas;

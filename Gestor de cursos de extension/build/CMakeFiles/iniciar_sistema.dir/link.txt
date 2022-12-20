@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/iniciar_sistema.dir/lib/tinyxml2.cpp.o CMakeFiles/iniciar_sistema.dir/src/Curso.cpp.o CMakeFiles/iniciar_sistema.dir/src/Estadistica.cpp.o CMakeFiles/iniciar_sistema.dir/src/SistemaDeGestionDeCursos.cpp.o CMakeFiles/iniciar_sistema.dir/src/Usuario.cpp.o CMakeFiles/iniciar_sistema.dir/src/main.cpp.o -o iniciar_sistema 

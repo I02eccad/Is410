@@ -57,5 +57,11 @@ struct ArgsIncorrectos : public exception {
    }
 };
 
+struct ComandoDesconocido : public exception {
+   const char * what () const throw () {
+      return "Comando desconocido!";
+   }
+};
+
 #endif /* EXCEPCIONES_H_ */
 

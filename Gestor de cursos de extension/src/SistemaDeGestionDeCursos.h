@@ -7,14 +7,11 @@
 #include <iomanip>
 #include "../lib/tinyxml2.h"
 #include "Curso.h"
-#include "Excepciones.h"
 #include "Usuario.h"
+#include "Excepciones.h"
+#include "Estadistica.h"
 
 class SistemaDeGestionDeCursos {
-	Rol autorizacion = Visitante;
-	Usuario usuarioConectado;
-	int contadorDeAccesosFallidos = 0;
-
 	std::vector<Curso> listaDeCursos;
 	std::vector<Usuario> listaDeUsuarios;
 
@@ -36,6 +33,10 @@ class SistemaDeGestionDeCursos {
 
 
 public:
+	Rol autorizacion = Administrador;
+	Usuario usuarioConectado = Usuario();
+	int contadorDeAccesosFallidos = 0;
+
 	SistemaDeGestionDeCursos();
 	void guardarDatos();
 	void verLosCursos();

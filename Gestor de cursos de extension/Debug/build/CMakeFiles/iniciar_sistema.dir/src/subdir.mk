@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 O_SRCS += \
 ../build/CMakeFiles/iniciar_sistema.dir/src/Curso.cpp.o \
+../build/CMakeFiles/iniciar_sistema.dir/src/Estadistica.cpp.o \
 ../build/CMakeFiles/iniciar_sistema.dir/src/SistemaDeGestionDeCursos.cpp.o \
 ../build/CMakeFiles/iniciar_sistema.dir/src/Usuario.cpp.o \
 ../build/CMakeFiles/iniciar_sistema.dir/src/main.cpp.o 

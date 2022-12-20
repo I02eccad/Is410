@@ -3,16 +3,16 @@
 
 #include <ctime>
 #include <vector>
+#include <string>
 #include "Usuario.h"
 #include "Estadistica.h"
-
-#ifndef EXCEPCIONES_H_
 #include "Excepciones.h"
-#endif /* EXCEPCIONES_H_ */
 
 using namespace std;
 
 class Curso {
+private:
+	string time2str(time_t seconds);
 public:
 	Curso(const char *id,
 		  const char *nombre,
@@ -20,19 +20,10 @@ public:
 		  time_t fechaDeInicio,
 		  time_t fechaFinal,
 		  int aforo,
-		  int precio);
-	Curso(const char *id,
-		  const char *nombre,
-		  const char *descripcion,
-		  time_t fechaDeInicio,
-		  time_t fechaFinal,
-		  vector<const char*> recursosAudiovisuales,
-		  int aforo,
-	      int precio,
-		  vector<int> listaDeEsperaDeEstud,
-	      vector<int> listaDeAsistentes,
+		  int precio,
 	      int ponentePrincipal,
-	      vector<int> listaDePonentes);
+		  vector<int> listaDePonentes,
+	      vector<int> listaDeAsistentes);
 	Curso(const char *id,
 		  const char *nombre,
 		  const char *descripcion,
@@ -62,7 +53,7 @@ public:
 	int ponentePrincipal;
 	vector<int> listaDePonentes;
 	vector<int> listaDeEstudiantes;
-	Estadistica estadistica;;
+	Estadistica estadistica = Estadistica();
 
 	bool isVisible = true;
 

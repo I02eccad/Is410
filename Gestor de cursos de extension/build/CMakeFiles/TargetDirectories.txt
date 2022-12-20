@@ -1,0 +1,3 @@
+/home/michal/Desktop/SCHOOL/CÓRDOBA/Ingeniría_del_Software/Is410/Gestor de cursos de extension/build/CMakeFiles/iniciar_sistema.dir
+/home/michal/Desktop/SCHOOL/CÓRDOBA/Ingeniría_del_Software/Is410/Gestor de cursos de extension/build/CMakeFiles/edit_cache.dir
+/home/michal/Desktop/SCHOOL/CÓRDOBA/Ingeniría_del_Software/Is410/Gestor de cursos de extension/build/CMakeFiles/rebuild_cache.dir

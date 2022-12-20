@@ -7,6 +7,7 @@ using namespace std;
 
 class Estadistica {
 public:
+	Estadistica();
 	Estadistica(const char *cursoId, int aforo);
 	Estadistica(const char *cursoId, int aforo, int numeroDeParticipantes, vector<int> calificacionesRecibidas);
 	const char *cursoId;

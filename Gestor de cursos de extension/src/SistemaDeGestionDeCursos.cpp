@@ -1,7 +1,7 @@
 #include "SistemaDeGestionDeCursos.h"
 #include <iostream>
 
-SistemaDeGestionDeCursos::SistemaDeGestionDeCursos() : usuarioConectado(NULL)
+SistemaDeGestionDeCursos::SistemaDeGestionDeCursos()
 {
 	// Cargar los datos de los XML ficheros a los vectores de datos dentro la clase
 	this->cargarCursos();
@@ -14,6 +14,20 @@ void SistemaDeGestionDeCursos::guardarDatos()
 	// Guardar los datos de los vectores de datos dentro la clase a los XML ficheros
 	this->guardarCursos();
 	this->guardarUsuarios();
+	for (Curso curso : this->listaDeCursos)
+	{
+		free((char *)curso.id);
+		free((char *)curso.nombre);
+		free((char *)curso.descripcion);
+		free((char *)curso.estadistica.cursoId);
+	}
+	for (Usuario usuario : this->listaDeUsuarios){
+		free((char *)usuario.contrasena);
+		free((char *)usuario.nombre);
+		free((char *)usuario.apellidos);
+		free((char *)usuario.dni);
+		free((char *)usuario.email);
+	}
 }
 
 void SistemaDeGestionDeCursos::verLosCursos()
@@ -164,7 +178,7 @@ void SistemaDeGestionDeCursos::cerrarSesion()
 		throw NoAuthorizado();
 	}
 	this->autorizacion = Visitante;
-	this->usuarioConectado = NULL;
+	this->usuarioConectado = Usuario();
 }
 
 void SistemaDeGestionDeCursos::registrar(Usuario usuario)
@@ -288,9 +302,18 @@ time_t SistemaDeGestionDeCursos::convertirStringDatetime(const char *datetime_st
 {
 	 tm tm{};
 	 istringstream str_stream(datetime_str);
-	 str_stream >> get_time(&tm, "%c");
+	 str_stream >> get_time(&tm, "%d.%m.%Y-%H:%M:%S");
 	 time_t time = mktime(&tm);
 	 return time;
+}
+
+string time2str(time_t seconds){
+	std::tm * ptm = std::localtime(&seconds);
+	char buffer[32];
+	// Format: 15.06.2009-20:20:00
+	std::strftime(buffer, 32, "%d.%m.%Y-%H:%M:%S", ptm);
+	string str(buffer);
+	return str;
 }
 
 vector<const char*> SistemaDeGestionDeCursos::cargarListaDeString(tinyxml2::XMLElement *root)
@@ -326,7 +349,7 @@ void SistemaDeGestionDeCursos::cargarUsuarios()
 	for (tinyxml2::XMLElement* usuario = root->FirstChildElement(); usuario != NULL; usuario = usuario->NextSiblingElement())
 	{
 
-		Usuario usuario_nuevo(usuario->FirstChildElement()->IntText(-1), usuario->NextSiblingElement()->GetText(),
+		Usuario usuario_nuevo(usuario->FirstChildElement()->IntText(), usuario->NextSiblingElement()->GetText(),
 				    usuario->NextSiblingElement()->GetText(), usuario->NextSiblingElement()->GetText(),
 					usuario->NextSiblingElement()->GetText(), usuario->NextSiblingElement()->GetText(),
 					(Rol) usuario->NextSiblingElement()->IntText(-1));
@@ -357,11 +380,11 @@ int SistemaDeGestionDeCursos::guardarCursos()
 		curso_nuevo->InsertEndChild(desc);
 
 		tinyxml2::XMLElement* fechaDeInicio = doc.NewElement("fechaDeInicio");
-		fechaDeInicio->SetText(ctime(&curso.fechaDeInicio));
+		fechaDeInicio->SetText(time2str(curso.fechaDeInicio).c_str());
 		curso_nuevo->InsertEndChild(fechaDeInicio);
 
 		tinyxml2::XMLElement* fechaFinal = doc.NewElement("fechaFinal");
-		fechaFinal->SetText(ctime(&curso.fechaFinal));
+		fechaFinal->SetText(time2str(curso.fechaFinal).c_str());
 		curso_nuevo->InsertEndChild(fechaFinal);
 
 		tinyxml2::XMLElement* recursosAV = doc.NewElement("recursosAudiovisuales");
@@ -470,7 +493,6 @@ int SistemaDeGestionDeCursos::guardarUsuarios()
 
 int SistemaDeGestionDeCursos::guardarEstadistica(tinyxml2::XMLDocument *doc, tinyxml2::XMLElement *padre, Estadistica estadistica)
 {
-
 	tinyxml2::XMLElement* cursoId = (*doc).NewElement("cursoId");
 	cursoId->SetText(estadistica.cursoId);
 	padre->InsertEndChild(cursoId);
@@ -484,7 +506,9 @@ int SistemaDeGestionDeCursos::guardarEstadistica(tinyxml2::XMLDocument *doc, tin
 	padre->InsertEndChild(numeroDeParticipantes);
 
 	tinyxml2::XMLElement* calificacionesRecibidas = (*doc).NewElement("califacionesRecibidas");
-	guardarListaDeElem<int>(doc, calificacionesRecibidas, estadistica.calificacionesRecibidas)
+	guardarListaDeElem<int>(doc, calificacionesRecibidas, estadistica.calificacionesRecibidas);
+	padre->InsertEndChild(calificacionesRecibidas);
 
 	return (*doc).ErrorID();
 }
+
