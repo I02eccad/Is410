@@ -28,5 +28,6 @@ build/CMakeFiles/3.24.2/CompilerIdCXX \
 build/CMakeFiles/iniciar_sistema.dir/lib \
 build/CMakeFiles/iniciar_sistema.dir/src \
 lib \
+pruebas \
 src \
 

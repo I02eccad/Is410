@@ -3,8 +3,8 @@
         <id>JAVA22</id>
         <nombre>JavaProgramming</nombre>
         <descripcion>This-is-a-java-programming-course</descripcion>
-        <fechaDeInicio>11.10.2022-01:10:10</fechaDeInicio>
-        <fechaFinal>11.10.2023-01:10:10</fechaFinal>
+        <fechaDeInicio>11.10.2022-02:10:10</fechaDeInicio>
+        <fechaFinal>11.10.2023-02:10:10</fechaFinal>
         <recursosAudiovisuales>
             <elem>microfono</elem>
         </recursosAudiovisuales>
@@ -38,8 +38,8 @@
         <id>PYTHON1</id>
         <nombre>Python</nombre>
         <descripcion>Esto_es_un_curso_de_Python</descripcion>
-        <fechaDeInicio>10.10.2022-11:10:10</fechaDeInicio>
-        <fechaFinal>10.10.2023-11:10:10</fechaFinal>
+        <fechaDeInicio>10.10.2022-12:10:10</fechaDeInicio>
+        <fechaFinal>10.10.2023-12:10:10</fechaFinal>
         <recursosAudiovisuales>
             <elem>microfono</elem>
         </recursosAudiovisuales>

@@ -26,4 +26,13 @@
         <email>test2@test.com</email>
         <rol>3</rol>
     </usuario>
+    <usuario>
+        <id>4</id>
+        <contrasena>password</contrasena>
+        <nombre>test</nombre>
+        <apellidos>test</apellidos>
+        <dni>test_dni</dni>
+        <email>test3@test.com</email>
+        <rol>2</rol>
+    </usuario>
 </usuarios>

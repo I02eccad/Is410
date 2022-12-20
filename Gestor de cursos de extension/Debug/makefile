@@ -9,6 +9,7 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include src/subdir.mk
+-include pruebas/subdir.mk
 -include lib/subdir.mk
 -include build/CMakeFiles/iniciar_sistema.dir/src/subdir.mk
 -include build/CMakeFiles/iniciar_sistema.dir/lib/subdir.mk
